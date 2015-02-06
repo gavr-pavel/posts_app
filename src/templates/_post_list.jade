@@ -1,0 +1,11 @@
+.post-list
+    article.post(ng-repeat="post in vm.posts.list | filter: postFilter | limitTo: vm.postsQuantity")
+        h1
+            .post-controls.pull-right
+                a(href="#/posts/{{ post.id }}/edit").post-controls-item
+                    i.glyphicon.glyphicon-pencil
+                a(href="", ng-click="vm.removePost(post)").post-controls-item
+                    i.glyphicon.glyphicon-remove
+            a(ng-href="#/posts/{{ post.id }}") {{ post.title }}
+
+        p.post-text {{ post.text }}

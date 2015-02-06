@@ -1,0 +1,29 @@
+extends _layout
+
+
+block title
+    | Posts App
+
+
+block content
+
+    .container(ng-app="posts_app", ng-strict-di)
+
+        include _nav
+        .view(ng-view)
+
+        //- templates
+        script(type="text/ng-template", id="post_list.html")
+            include _post_list
+
+        script(type="text/ng-template", id="post_new.html")
+            include _post_new
+
+        script(type="text/ng-template", id="post_details.html")
+            include _post_details
+
+        script(type="text/ng-template", id="post_edit.html")
+            include _post_edit
+
+        script(type="text/ng-template", id="not_found.html")
+            include _not_found

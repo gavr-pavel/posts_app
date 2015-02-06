@@ -1,0 +1,9 @@
+.post-new
+    form(name="post_new", ng-submit="vm.submit()", novalidate)
+        .form-group(ng-class="{'has-error': post_new.$submitted && post_new.title.$error.required}")
+            label.control-label(for="post_new_title") Заголовок
+            input.form-control#post_new_title(name="title", ng-model="vm.post.title", required)
+        .form-group(ng-class="{'has-error': post_new.$submitted && post_new.text.$error.required}")
+            label.control-label(for="post_new_text") Текст
+            textarea.form-control#post_new_text(rows="10", name="text", ng-model="vm.post.text", required)
+        button.btn.btn-primary(type="submit") Создать

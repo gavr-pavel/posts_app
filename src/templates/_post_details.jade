@@ -1,0 +1,11 @@
+.post-details(ng-if="vm.post")
+    h1
+        .post-controls.pull-right
+            a(href="#/posts/{{ vm.post.id }}/edit").post-controls-item
+                i.glyphicon.glyphicon-pencil
+            a(href="", ng-click="vm.removePost()").post-controls-item
+                i.glyphicon.glyphicon-remove
+        | {{ vm.post.title }}
+    p.post-text {{ vm.post.text }}
+
+div(ng-if="!vm.post", ng-include="'not_found.html'")

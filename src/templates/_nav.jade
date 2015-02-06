@@ -1,0 +1,11 @@
+nav.navbar.navbar-inverse.navbar-fixed-top(ng-controller="NavCtrl as vm")
+    .container
+        .collapse.navbar-collapse
+            ul.nav.navbar-nav
+                li(ng-class="{active: $location.path() == '/posts'}")
+                    a(href="#/posts") Все записи
+                li(ng-class="{active: $location.path() == '/posts/new'}")
+                    a(href="#/posts/new") Новая запись
+
+            form.navbar-form.navbar-right
+                input.form-control(placeholder="Поиск по заголовку", ng-model="vm.postFilter.title")

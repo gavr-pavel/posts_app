@@ -1,0 +1,87 @@
+<!DOCTYPE !>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Posts App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/app.css"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular-route.min.js"></script>
+    <script src="js/app.js"></script><!--[if lte IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div ng-app="posts_app" ng-strict-di="ng-strict-di" class="container">
+      <nav ng-controller="NavCtrl as vm" class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+          <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li ng-class="{active: $location.path() == '/posts'}"><a href="#/posts">Все записи</a></li>
+              <li ng-class="{active: $location.path() == '/posts/new'}"><a href="#/posts/new">Новая запись</a></li>
+            </ul>
+            <form class="navbar-form navbar-right">
+              <input placeholder="Поиск по заголовку" ng-model="vm.postFilter.title" class="form-control"/>
+            </form>
+          </div>
+        </div>
+      </nav>
+      <div ng-view="ng-view" class="view"></div>
+      <script type="text/ng-template" id="post_list.html">
+        <div class="post-list">
+          <article ng-repeat="post in vm.posts.list | filter: postFilter | limitTo: vm.postsQuantity" class="post">
+            <h1>
+              <div class="post-controls pull-right"><a href="#/posts/{{ post.id }}/edit" class="post-controls-item"><i class="glyphicon glyphicon-pencil"></i></a><a href="" ng-click="vm.removePost(post)" class="post-controls-item"><i class="glyphicon glyphicon-remove"></i></a></div><a ng-href="#/posts/{{ post.id }}">{{ post.title }}</a>
+            </h1>
+            <p class="post-text">{{ post.text }}</p>
+          </article>
+        </div>
+      </script>
+      <script type="text/ng-template" id="post_new.html">
+        <div class="post-new">
+          <form name="post_new" ng-submit="vm.submit()" novalidate="novalidate">
+            <div ng-class="{'has-error': post_new.$submitted &amp;&amp; post_new.title.$error.required}" class="form-group">
+              <label for="post_new_title" class="control-label">Заголовок</label>
+              <input id="post_new_title" name="title" ng-model="vm.post.title" required="required" class="form-control"/>
+            </div>
+            <div ng-class="{'has-error': post_new.$submitted &amp;&amp; post_new.text.$error.required}" class="form-group">
+              <label for="post_new_text" class="control-label">Текст</label>
+              <textarea id="post_new_text" rows="10" name="text" ng-model="vm.post.text" required="required" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Создать</button>
+          </form>
+        </div>
+      </script>
+      <script type="text/ng-template" id="post_details.html">
+        <div ng-if="vm.post" class="post-details">
+          <h1>
+            <div class="post-controls pull-right"><a href="#/posts/{{ vm.post.id }}/edit" class="post-controls-item"><i class="glyphicon glyphicon-pencil"></i></a><a href="" ng-click="vm.removePost()" class="post-controls-item"><i class="glyphicon glyphicon-remove"></i></a></div>{{ vm.post.title }}
+          </h1>
+          <p class="post-text">{{ vm.post.text }}</p>
+        </div>
+        <div ng-if="!vm.post" ng-include="'not_found.html'"></div>
+      </script>
+      <script type="text/ng-template" id="post_edit.html">
+        <div class="post-edit">
+          <form name="post_edit" ng-submit="vm.submit()" novalidate="novalidate">
+            <div ng-class="{'has-error': post_edit.$submitted &amp;&amp; post_edit.title.$error.required}" class="form-group">
+              <label for="post_edit_title" class="control-label">Заголовок</label>
+              <input id="post_edit_title" name="title" ng-model="vm.post.title" required="required" class="form-control"/>
+            </div>
+            <div ng-class="{'has-error': post_edit.$submitted &amp;&amp; post_edit.text.$error.required}" class="form-group">
+              <label for="post_edit_text" class="control-label">Текст</label>
+              <textarea id="post_edit_text" rows="10" name="text" ng-model="vm.post.text" required="required" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Сохранить</button> <a ng-href="#/posts/{{ vm.post.id }}" class="btn btn-default">Отмена</a>
+          </form>
+        </div>
+      </script>
+      <script type="text/ng-template" id="not_found.html">
+        <div class="not-found">
+          <h1>Здесь ничего нет</h1>
+          <p><a href="#/posts">К списку записей</a></p>
+        </div>
+      </script>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+.post-edit
+    form(name="post_edit", ng-submit="vm.submit()", novalidate)
+        .form-group(ng-class="{'has-error': post_edit.$submitted && post_edit.title.$error.required}")
+            label.control-label(for="post_edit_title") Заголовок
+            input.form-control#post_edit_title(name="title", ng-model="vm.post.title", required)
+        .form-group(ng-class="{'has-error': post_edit.$submitted && post_edit.text.$error.required}")
+            label.control-label(for="post_edit_text") Текст
+            textarea.form-control#post_edit_text(rows="10", name="text", ng-model="vm.post.text", required)
+        button.btn.btn-primary(type="submit") Сохранить
+        |  
+        a.btn.btn-default(ng-href="#/posts/{{ vm.post.id }}") Отмена
